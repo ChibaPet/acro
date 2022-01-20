@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+
+my @chars = split(//, $ARGV[0]);
+my %words;
+
+open my $wordfile, '<', '/usr/share/dict/words';
+while (<$wordfile>) {
+    chomp;
+    my ($foo, undef) = split(//, $_);
+    push @{$words{$foo}}, $_;
+}
+close $wordfile;
+
+for (@chars) {
+    print(ucfirst(@{$words{$_}}[rand @{$words{$_}}]) . " ");
+}
+print "\n";
